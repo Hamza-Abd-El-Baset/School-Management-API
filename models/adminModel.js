@@ -3,6 +3,13 @@ const bcrypt = require('bcryptjs');
 const Joi = require('joi');
 
 const adminSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        trim: true,
+    },
     email: {
         type: String,
         required: true,
@@ -40,9 +47,11 @@ const Admin = mongoose.model('Admin', adminSchema);
 
 // Joi schema for validation
 const adminValidationSchema = Joi.object({
+    username: Joi.string().required(),
     email: Joi.string().email().required(),
     password: Joi.string().min(8).required(),
     isSuperAdmin: Joi.boolean().default(false),
 });
 
-module.exports = Admin
+module.exports = Admin;
+
