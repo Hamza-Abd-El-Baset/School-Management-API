@@ -3,28 +3,28 @@ const Classroom = require('../models/classroomModel');
 // Controller logic for CRUD operations related to classrooms
 
 // Create a new classroom
-exports.createClassroom = async (req, res) => {
+exports.createClassroom = async (req, res, next) => {
+    const { name, capacity } = req.body;
     try {
-        const { name, capacity } = req.body;
         const newClassroom = await Classroom.create({ name, capacity });
         res.status(201).json({ success: true, data: newClassroom });
     } catch (error) {
-        res.status(400).json({ success: false, message: error.message });
+        next(error); // Pass the error to the error handling middleware
     }
 };
 
 // Get all classrooms
-exports.getAllClassrooms = async (req, res) => {
+exports.getAllClassrooms = async (req, res, next) => {
     try {
         const classrooms = await Classroom.find();
         res.status(200).json({ success: true, data: classrooms });
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        next(error); // Pass the error to the error handling middleware
     }
 };
 
 // Get a single classroom by ID
-exports.getClassroomById = async (req, res) => {
+exports.getClassroomById = async (req, res, next) => {
     try {
         const classroom = await Classroom.findById(req.params.id);
         if (!classroom) {
@@ -32,26 +32,26 @@ exports.getClassroomById = async (req, res) => {
         }
         res.status(200).json({ success: true, data: classroom });
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        next(error); // Pass the error to the error handling middleware
     }
 };
 
 // Update a classroom by ID
-exports.updateClassroom = async (req, res) => {
+exports.updateClassroom = async (req, res, next) => {
+    const { name, capacity } = req.body;
     try {
-        const { name, capacity } = req.body;
         const classroom = await Classroom.findByIdAndUpdate(req.params.id, { name, capacity }, { new: true });
         if (!classroom) {
             return res.status(404).json({ success: false, message: 'Classroom not found' });
         }
         res.status(200).json({ success: true, data: classroom });
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        next(error); // Pass the error to the error handling middleware
     }
 };
 
 // Delete a classroom by ID
-exports.deleteClassroom = async (req, res) => {
+exports.deleteClassroom = async (req, res, next) => {
     try {
         const classroom = await Classroom.findByIdAndDelete(req.params.id);
         if (!classroom) {
@@ -59,6 +59,6 @@ exports.deleteClassroom = async (req, res) => {
         }
         res.status(204).json({ success: true, data: null });
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        next(error); // Pass the error to the error handling middleware
     }
 };
