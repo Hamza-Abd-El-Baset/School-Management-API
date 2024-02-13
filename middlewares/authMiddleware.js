@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
 
-// Middleware function to verify if token is provided and authenticate school admin
+// Middleware function to verify if token is provided and authenticate admin
 exports.verifyTokenAndAuthenticate = (req, res, next) => {
     if (req.headers.authorization) {
         const token = req.headers.authorization.split(" ")[1];
         try {
             const decodedPayload = jwt.verify(token, process.env.JWT_SECRET);
-            req.schoolAdmin = decodedPayload;
+            req.admin = decodedPayload;
             next();
         } catch (err) {
             return next({
@@ -22,10 +22,10 @@ exports.verifyTokenAndAuthenticate = (req, res, next) => {
     }
 };
 
-// Middleware function to verify if school admin is a super admin
+// Middleware function to verify if admin is a super admin
 exports.verifySuperAdmin = (req, res, next) => {
-    const { superAdmin } = req.schoolAdmin;
-    if (superAdmin) {
+    const { isSuperAdmin } = req.admin;
+    if (isSuperAdmin) {
         next();
     } else {
         return next({
@@ -35,9 +35,9 @@ exports.verifySuperAdmin = (req, res, next) => {
     }
 };
 
-// Middleware function to verify if school admin owns the account
+// Middleware function to verify if admin owns the account
 exports.verifyAccountOwnership = (req, res, next) => {
-    if (req.schoolAdmin.id === req.params.id) {
+    if (req.admin._id.toString() === req.params.id) {
         next();
     } else {
         return next({
@@ -47,10 +47,10 @@ exports.verifyAccountOwnership = (req, res, next) => {
     }
 };
 
-// Middleware function to verify if school admin owns the account or is a super admin
+// Middleware function to verify if admin owns the account or is a super admin
 exports.verifyAccountOwnershipOrSuperAdmin = (req, res, next) => {
-    const { superAdmin } = req.schoolAdmin;
-    if (req.schoolAdmin.id === req.params.id || superAdmin) {
+    const { isSuperAdmin } = req.admin;
+    if (req.admin._id.toString() === req.params.id || isSuperAdmin) {
         next();
     } else {
         return next({
