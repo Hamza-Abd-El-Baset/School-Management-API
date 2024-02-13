@@ -86,3 +86,35 @@ exports.deleteAdmin = async (req, res, next) => {
         next(error);
     }
 };
+
+
+
+// Admin login
+exports.login = async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
+
+        // Check if admin exists
+        const admin = await Admin.findOne({ email });
+        if (!admin) {
+            const error = new Error("Invalid credentials");
+            error.status = 401;
+            throw error;
+        }
+
+        // Check if password is correct
+        const isPasswordMatch = await bcrypt.compare(password, admin.password);
+        if (!isPasswordMatch) {
+            const error = new Error("Invalid credentials");
+            error.status = 401;
+            throw error;
+        }
+
+        // Generate JWT token
+        const token = jwt.sign({ id: admin._id, email: admin.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+        res.status(200).json({ success: true, token });
+    } catch (error) {
+        next(error); // Pass the error to the error handling middleware
+    }
+};

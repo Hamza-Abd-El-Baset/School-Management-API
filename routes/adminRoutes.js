@@ -14,4 +14,10 @@ router.route('/:id')
     .put(verifyTokenAndAuthenticate, verifySuperAdmin, validateObjectId, adminController.updateAdmin)
     .delete(verifyTokenAndAuthenticate, verifySuperAdmin, validateObjectId, adminController.deleteAdmin);
 
+router.route('/login')
+    .post(adminController.login);
+
 module.exports = router;
+
+
+
