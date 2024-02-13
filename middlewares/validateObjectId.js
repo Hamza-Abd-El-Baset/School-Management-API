@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 
 // Middleware function to validate ObjectId
-exports = (req, res, next) => {
+const validateObjectId = (req, res, next) => {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
         return next({
@@ -12,3 +12,6 @@ exports = (req, res, next) => {
     }
     next();
 };
+
+module.exports = validateObjectId;
+

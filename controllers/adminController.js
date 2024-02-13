@@ -11,7 +11,7 @@ exports.createAdmin = async (req, res, next) => {
 
         // Check if there are any admins in the database
         const adminCount = await Admin.countDocuments();
-        if (adminCount > 0 && !req.schoolAdmin.isSuperAdmin) {
+        if (adminCount > 0 && !req.admin.isSuperAdmin) {
             const error = new Error("Not allowed, only super admin can create admins");
             error.status = 403;
             throw error;
@@ -57,8 +57,11 @@ exports.updateAdmin = async (req, res, next) => {
     try {
         const { email, password, isSuperAdmin } = req.body;
 
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
+        // Check if password is provided and not empty
+        let hashedPassword;
+        if (password) {
+            hashedPassword = await bcrypt.hash(password, 10);
+        }
 
         const admin = await Admin.findByIdAndUpdate(req.params.id, { email, password: hashedPassword, isSuperAdmin }, { new: true });
         if (!admin) {
@@ -86,8 +89,6 @@ exports.deleteAdmin = async (req, res, next) => {
         next(error);
     }
 };
-
-
 
 // Admin login
 exports.login = async (req, res, next) => {

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminController');
-const { verifySuperAdmin } = require('../middlewares/authMiddleware');
+const { verifyTokenAndAuthenticate, verifySuperAdmin } = require('../middlewares/authMiddleware');
 const validateObjectId = require('../middlewares/validateObjectId');
 
 // Define routes for CRUD operations related to admins

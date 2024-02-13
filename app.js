@@ -12,7 +12,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // Routes
-app.use('/api/schools', adminRoutes);
+app.use('/api/admins', adminRoutes);
 app.use('/api/schools', schoolRoutes);
 app.use('/api/classrooms', classroomRoutes);
 app.use('/api/students', studentRoutes);
