@@ -1,61 +1,61 @@
 const jwt = require('jsonwebtoken');
 
-// Middleware function to verify if user is logged in and authenticate
+// Middleware function to verify if token is provided and authenticate school admin
 exports.verifyTokenAndAuthenticate = (req, res, next) => {
     if (req.headers.authorization) {
         const token = req.headers.authorization.split(" ")[1];
         try {
             const decodedPayload = jwt.verify(token, process.env.JWT_SECRET);
-            req.user = decodedPayload;
+            req.schoolAdmin = decodedPayload;
             next();
         } catch (err) {
-            next({
+            return next({
                 status: 401,
                 message: "Invalid token, access denied"
             });
         }
     } else {
-        next({
+        return next({
             status: 401,
             message: "No token provided, access denied"
         });
     }
 };
 
-// Middleware function to verify if user is an admin
-exports.verifyAdmin = (req, res, next) => {
-    const { isAdmin } = req.user;
-    if (isAdmin) {
+// Middleware function to verify if school admin is a super admin
+exports.verifySuperAdmin = (req, res, next) => {
+    const { superAdmin } = req.schoolAdmin;
+    if (superAdmin) {
         next();
     } else {
-        next({
+        return next({
             status: 403,
-            message: "Not allowed, only admin"
+            message: "Not allowed, only super admin"
         });
     }
 };
 
-// Middleware function to verify if user owns the profile
-exports.verifyUserOwnership = (req, res, next) => {
-    if (req.user.id === req.params.id) {
+// Middleware function to verify if school admin owns the account
+exports.verifyAccountOwnership = (req, res, next) => {
+    if (req.schoolAdmin.id === req.params.id) {
         next();
     } else {
-        next({
+        return next({
             status: 403,
-            message: "Not allowed, only profile owner can modify"
+            message: "Not allowed, only account owner can modify"
         });
     }
 };
 
-// Middleware function to verify if user owns the profile or is an admin
-exports.verifyUserOwnershipOrAdmin = (req, res, next) => {
-    const { isAdmin } = req.user;
-    if (req.user.id === req.params.id || isAdmin) {
+// Middleware function to verify if school admin owns the account or is a super admin
+exports.verifyAccountOwnershipOrSuperAdmin = (req, res, next) => {
+    const { superAdmin } = req.schoolAdmin;
+    if (req.schoolAdmin.id === req.params.id || superAdmin) {
         next();
     } else {
-        next({
+        return next({
             status: 403,
-            message: "Not allowed, only admin or profile owner can delete the profile"
+            message: "Not allowed, only super admin or account owner can delete the account"
         });
     }
 };
