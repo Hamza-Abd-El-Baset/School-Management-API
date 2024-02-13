@@ -1,12 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const schoolController = require('../controllers/schoolController');
+const validateObjectId = require('../middlewares/validateObjectId')
+const {verifyTokenAndAuthenticate, verifySuperAdmin} = require('../middlewares/authMiddleware')
 
 // Define routes for CRUD operations related to schools
-router.post('/', schoolController.createSchool);
-router.get('/', schoolController.getAllSchools);
-router.get('/:id', schoolController.getSchoolById);
-router.put('/:id', schoolController.updateSchool);
-router.delete('/:id', schoolController.deleteSchool);
+router.route('/')
+router.post(verifyTokenAndAuthenticate, verifySuperAdmin, schoolController.createSchool);
+router.get(verifyTokenAndAuthenticate, verifySuperAdmin, schoolController.getAllSchools);
+
+router.route('/:id')
+.get(validateObjectId, verifyTokenAndAuthenticate, verifySuperAdmin, schoolController.getSchoolById)
+.put(validateObjectId, verifyTokenAndAuthenticate, verifySuperAdmin, schoolController.updateSchool)
+.delete(validateObjectId, verifyTokenAndAuthenticate, verifySuperAdmin, schoolController.deleteSchool)
+
 
 module.exports = router;
