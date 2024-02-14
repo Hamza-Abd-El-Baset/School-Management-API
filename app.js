@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser')
 const adminRoutes = require('./routes/adminRoutes');
 const schoolRoutes = require('./routes/schoolRoutes');
 const classroomRoutes = require('./routes/classroomRoutes');
@@ -11,7 +12,7 @@ const app = express();
 app.use(express.static('public'))
 
 //Middlewares
-app.use(express.json())
+app.use(bodyParser.json())
 
 // Routes
 app.use('/api/admins', adminRoutes);
