@@ -11,16 +11,39 @@ exports.createAdmin = async (req, res, next) => {
 
         // Check if there are any admins in the database
         const adminCount = await Admin.countDocuments();
-        if (adminCount > 0 && !req.admin.isSuperAdmin) {
+        let token = null;
+        if (adminCount === 0) {
+            // No admins in the database, allow creation without token
+            const newAdmin = await Admin.create({ username, email, password, isSuperAdmin });
+            res.status(201).json({ success: true, data: newAdmin });
+            return;
+        }
+
+        // Extract token from authorization header
+        const authHeader = req.headers.authorization;
+        if (authHeader && authHeader.startsWith('Bearer ')) {
+            token = authHeader.split(' ')[1];
+        }
+
+        // Verify token
+        if (!token) {
+            // Token not provided
+            const error = new Error("Token not provided");
+            error.status = 401;
+            throw error;
+        }
+
+        const decodedPayload = jwt.verify(token, process.env.JWT_SECRET);
+        req.admin = decodedPayload;
+
+        // Ensure token belongs to a superAdmin
+        if (!req.admin.isSuperAdmin) {
             const error = new Error("Not allowed, only super admin can create admins");
             error.status = 403;
             throw error;
         }
 
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const newAdmin = await Admin.create({ username, email, password: hashedPassword, isSuperAdmin });
+        const newAdmin = await Admin.create({ username, email, password, isSuperAdmin });
         res.status(201).json({ success: true, data: newAdmin });
     } catch (error) {
         next(error);
@@ -112,7 +135,7 @@ exports.login = async (req, res, next) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ id: admin._id, email: admin.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: admin._id, isSuperAdmin: admin.isSuperAdmin }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         res.status(200).json({ success: true, token });
     } catch (error) {
