@@ -16,7 +16,7 @@ This repository contains the backend component of a school management applicatio
    Clone this repository to your local machine using the following command:
 
    ```shell
-   git clone [https://github.com/Hamza-Abd-El-Baset/Blog-App-API.git](https://github.com/Hamza-Abd-El-Baset/School-Management-API.git)
+   git clone https://github.com/Hamza-Abd-El-Baset/School-Management-API.git
    ```
 
 2. **Install Dependencies:**
