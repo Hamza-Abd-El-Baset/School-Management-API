@@ -9,9 +9,15 @@ const classroomSchema = new mongoose.Schema({
     capacity: {
         type: Number,
         required: true
+    },
+    school: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'School',
+        required: true
     }
 });
 
 const Classroom = mongoose.model('Classroom', classroomSchema);
 
 module.exports = Classroom;
+

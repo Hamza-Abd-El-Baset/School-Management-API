@@ -1,12 +1,16 @@
 const Classroom = require('../models/classroomModel');
+const validateObjectId = require('../middlewares/validateObjectId');
 
 // Controller logic for CRUD operations related to classrooms
 
 // Create a new classroom
 exports.createClassroom = async (req, res, next) => {
-    const { name, capacity } = req.body;
+    const { name, capacity, schoolId } = req.body;
     try {
-        const newClassroom = await Classroom.create({ name, capacity });
+        // Validate the schoolId
+        validateObjectId(req, res, () => {});
+
+        const newClassroom = await Classroom.create({ name, capacity, school: schoolId });
         res.status(201).json({ success: true, data: newClassroom });
     } catch (error) {
         next(error); // Pass the error to the error handling middleware
@@ -38,9 +42,12 @@ exports.getClassroomById = async (req, res, next) => {
 
 // Update a classroom by ID
 exports.updateClassroom = async (req, res, next) => {
-    const { name, capacity } = req.body;
+    const { name, capacity, schoolId } = req.body;
     try {
-        const classroom = await Classroom.findByIdAndUpdate(req.params.id, { name, capacity }, { new: true });
+        // Validate the schoolId
+        validateObjectId(req, res, () => {});
+
+        const classroom = await Classroom.findByIdAndUpdate(req.params.id, { name, capacity, school: schoolId }, { new: true });
         if (!classroom) {
             return res.status(404).json({ success: false, message: 'Classroom not found' });
         }

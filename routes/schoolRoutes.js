@@ -6,8 +6,8 @@ const {verifyTokenAndAuthenticate, verifySuperAdmin} = require('../middlewares/a
 
 // Define routes for CRUD operations related to schools
 router.route('/')
-router.post(verifyTokenAndAuthenticate, verifySuperAdmin, schoolController.createSchool);
-router.get(verifyTokenAndAuthenticate, verifySuperAdmin, schoolController.getAllSchools);
+.post(verifyTokenAndAuthenticate, verifySuperAdmin, schoolController.createSchool)
+.get(verifyTokenAndAuthenticate, verifySuperAdmin, schoolController.getAllSchools)
 
 router.route('/:id')
 .get(validateObjectId, verifyTokenAndAuthenticate, verifySuperAdmin, schoolController.getSchoolById)
