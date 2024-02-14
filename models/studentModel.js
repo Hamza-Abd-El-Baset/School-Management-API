@@ -14,6 +14,12 @@ const studentSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true
+    },
+    // Add reference to School model
+    school: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'School',
+        required: true
     }
 });
 

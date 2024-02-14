@@ -1,12 +1,16 @@
 const Student = require('../models/studentModel');
+const validateObjectId = require('../middlewares/validateObjectId');
 
 // Controller logic for CRUD operations related to students
 
 // Create a new student
 exports.createStudent = async (req, res, next) => {
-    const { name, age, grade } = req.body;
+    const { name, age, grade, schoolId } = req.body;
     try {
-        const newStudent = await Student.create({ name, age, grade });
+        // Validate the schoolId
+        validateObjectId(req, res, () => {});
+
+        const newStudent = await Student.create({ name, age, grade, school: schoolId });
         res.status(201).json({ success: true, data: newStudent });
     } catch (error) {
         next(error); // Pass the error to the error handling middleware
@@ -38,9 +42,12 @@ exports.getStudentById = async (req, res, next) => {
 
 // Update a student by ID
 exports.updateStudent = async (req, res, next) => {
-    const { name, age, grade } = req.body;
+    const { name, age, grade, schoolId } = req.body;
     try {
-        const student = await Student.findByIdAndUpdate(req.params.id, { name, age, grade }, { new: true });
+        // Validate the schoolId
+        validateObjectId(req, res, () => {});
+
+        const student = await Student.findByIdAndUpdate(req.params.id, { name, age, grade, school: schoolId }, { new: true });
         if (!student) {
             return res.status(404).json({ success: false, message: 'Student not found' });
         }
