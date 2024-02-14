@@ -10,10 +10,9 @@ router.route('/')
     .get(verifyTokenAndAuthenticate, verifySuperAdmin, adminController.getAllAdmins);
 
 router.route('/:id')
-    .all(verifyTokenAndAuthenticate, verifySuperAdmin, validateObjectId)
-    .get(adminController.getAdminById)
-    .put(adminController.updateAdmin)
-    .delete(adminController.deleteAdmin);
+    .get(verifyTokenAndAuthenticate, verifySuperAdmin, validateObjectId, adminController.getAdminById)
+    .put(verifyTokenAndAuthenticate, verifySuperAdmin, validateObjectId, adminController.updateAdmin)
+    .delete(verifyTokenAndAuthenticate, verifySuperAdmin, validateObjectId, adminController.deleteAdmin);
 
 router.route('/login')
     .post(adminController.login);

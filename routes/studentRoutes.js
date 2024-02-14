@@ -6,14 +6,12 @@ const { verifyTokenAndAuthenticate } = require('../middlewares/authMiddleware');
 
 // Define routes for CRUD operations related to students
 router.route('/')
-    .all(verifyTokenAndAuthenticate)
-    .post(studentController.createStudent)
-    .get(studentController.getAllStudents);
+    .post(verifyTokenAndAuthenticate, studentController.createStudent)
+    .get(verifyTokenAndAuthenticate, studentController.getAllStudents);
 
 router.route('/:id')
-    .all(validateObjectId, verifyTokenAndAuthenticate)
-    .get(studentController.getStudentById)
-    .put(studentController.updateStudent)
-    .delete(studentController.deleteStudent);
+    .get(validateObjectId, verifyTokenAndAuthenticate, studentController.getStudentById)
+    .put(validateObjectId, verifyTokenAndAuthenticate, studentController.updateStudent)
+    .delete(validateObjectId, verifyTokenAndAuthenticate, studentController.deleteStudent);
 
 module.exports = router;

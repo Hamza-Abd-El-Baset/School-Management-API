@@ -6,14 +6,12 @@ const { verifyTokenAndAuthenticate } = require('../middlewares/authMiddleware');
 
 // Define routes for CRUD operations related to classrooms
 router.route('/')
-    .all(verifyTokenAndAuthenticate)
-    .post(classroomController.createClassroom)
-    .get(classroomController.getAllClassrooms);
+    .post(verifyTokenAndAuthenticate, classroomController.createClassroom)
+    .get(verifyTokenAndAuthenticate, classroomController.getAllClassrooms);
 
 router.route('/:id')
-    .all(validateObjectId, verifyTokenAndAuthenticate)
-    .get(classroomController.getClassroomById)
-    .put(classroomController.updateClassroom)
-    .delete(classroomController.deleteClassroom);
+    .get(validateObjectId, verifyTokenAndAuthenticate, classroomController.getClassroomById)
+    .put(validateObjectId, verifyTokenAndAuthenticate, classroomController.updateClassroom)
+    .delete(validateObjectId, verifyTokenAndAuthenticate, classroomController.deleteClassroom);
 
 module.exports = router;
