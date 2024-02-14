@@ -1,60 +1,57 @@
-School Management API
+# School Management API
 
 This repository contains the backend component of a school management application developed using Node.js, Express.js, and MongoDB. The backend provides the necessary APIs and functionality to manage schools, administrators, students, and classrooms.
-Features
 
-    Admin Management: CRUD operations for managing administrators.
-    Student Management: CRUD operations for managing students.
-    Classroom Management: CRUD operations for managing classrooms.
-    School Management: CRUD operations for managing schools.
-    Authentication: User authentication and authorization mechanisms.
-    Error Handling: Custom error handling middleware to manage errors gracefully.
+## Features
+- **Admin Management**: CRUD operations for managing administrators.
+- **Student Management**: CRUD operations for managing students.
+- **Classroom Management**: CRUD operations for managing classrooms.
+- **School Management**: CRUD operations for managing schools.
+- **Authentication**: User authentication and authorization mechanisms.
+- **Error Handling**: Custom error handling middleware to manage errors gracefully.
 
-Getting Started
+## Getting Started
 
-    Clone the Repository:
-    Clone this repository to your local machine using the following command:
+1. **Clone the Repository:** 
+   Clone this repository to your local machine using the following command:
 
-    shell
+   ```shell
+   git clone [https://github.com/Hamza-Abd-El-Baset/Blog-App-API.git](https://github.com/Hamza-Abd-El-Baset/School-Management-API.git)
+   ```
 
-git clone https://github.com/Hamza-Abd-El-Baset/School-Management-API.git
+2. **Install Dependencies:**
+   Install project dependencies using npm:
 
-Install Dependencies:
-Install project dependencies using npm:
+   ```shell
+   npm install
+   ```
 
-shell
+3. **Set Up Environment Variables:**
+   Create a `.env` file in the project's root directory and define the necessary environment variables. Here is a list of the required variables:
 
-npm install
+   - `PORT`: The port on which the server will listen.
+   - `MONGO_URI`: The URI for your MongoDB database.
+   - `NODE_ENV`: The environment mode (e.g., 'development' or 'production').
+   - `JWT_SECRET`: The secret key used for JSON Web Token (JWT) authentication.
 
-Set Up Environment Variables:
-Create a .env file in the project's root directory and define the necessary environment variables. Here is a list of the required variables:
+   Use this format in your `.env` file:
 
-    PORT: The port on which the server will listen.
-    MONGO_URI: The URI for your MongoDB database.
-    NODE_ENV: The environment mode (e.g., 'development' or 'production').
-    JWT_SECRET: The secret key used for JSON Web Token (JWT) authentication.
+   ```shell
+   PORT=3000
+   MONGO_URI=mongodb://localhost/mydatabase
+   NODE_ENV=development
+   JWT_SECRET=your-secret-key
+   ```
 
-Use this format in your .env file:
+4. **Start the Server:**
+   Run the following command to start the server:
 
-shell
+   ```shell
+   npm start
+   ```
 
-PORT=3000
-MONGO_URI=mongodb://localhost/school-management
-NODE_ENV=development
-JWT_SECRET=your-secret-key
+   The API will be available at `http://localhost:3000`.
 
-Start the Server:
-Run the following command to start the server:
+## Usage
 
-shell
-
-    npm start
-
-    The API will be available at http://localhost:3000.
-
-Usage
-
-Detailed instructions on how to use this backend API can be found in the API Documentation.
-Contact
-
-If you have any questions or want to connect, you can reach me at https://www.linkedin.com/in/hamza-abd-el-baset/
+Detailed instructions on how to use this backend API can be found in the [API Documentation](https://documenter.getpostman.com/view/28144875/2sA2r556FJ).
