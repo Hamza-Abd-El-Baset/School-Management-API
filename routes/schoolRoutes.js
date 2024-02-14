@@ -6,13 +6,15 @@ const {verifyTokenAndAuthenticate, verifySuperAdmin} = require('../middlewares/a
 
 // Define routes for CRUD operations related to schools
 router.route('/')
-.post(verifyTokenAndAuthenticate, verifySuperAdmin, schoolController.createSchool)
-.get(verifyTokenAndAuthenticate, verifySuperAdmin, schoolController.getAllSchools)
+.all(verifyTokenAndAuthenticate, verifySuperAdmin)
+.post(schoolController.createSchool)
+.get(schoolController.getAllSchools)
 
 router.route('/:id')
-.get(validateObjectId, verifyTokenAndAuthenticate, verifySuperAdmin, schoolController.getSchoolById)
-.put(validateObjectId, verifyTokenAndAuthenticate, verifySuperAdmin, schoolController.updateSchool)
-.delete(validateObjectId, verifyTokenAndAuthenticate, verifySuperAdmin, schoolController.deleteSchool)
+.all(validateObjectId, verifyTokenAndAuthenticate, verifySuperAdmin)
+.get(schoolController.getSchoolById)
+.put(schoolController.updateSchool)
+.delete(schoolController.deleteSchool)
 
 
 module.exports = router;
