@@ -1,74 +1,60 @@
 School Management API
 
-The School Management API is a project developed to manage various aspects of a school, including administrators, students, classrooms, and schools.
+This repository contains the backend component of a school management application developed using Node.js, Express.js, and MongoDB. The backend provides the necessary APIs and functionality to manage schools, administrators, students, and classrooms.
 Features
 
-    Admins: Manage administrators with different levels of access.
-    Students: Keep track of student information such as name, age, and grade.
-    Classrooms: Manage classrooms and their capacities.
-    Schools: Manage information about schools.
+    Admin Management: CRUD operations for managing administrators.
+    Student Management: CRUD operations for managing students.
+    Classroom Management: CRUD operations for managing classrooms.
+    School Management: CRUD operations for managing schools.
+    Authentication: User authentication and authorization mechanisms.
+    Error Handling: Custom error handling middleware to manage errors gracefully.
 
-Installation
+Getting Started
 
-    Clone the repository:
+    Clone the Repository:
+    Clone this repository to your local machine using the following command:
 
-    bash
+    shell
 
-git clone <repository-url>
+git clone https://github.com/Hamza-Abd-El-Baset/School-Management-API.git
 
-Install dependencies:
+Install Dependencies:
+Install project dependencies using npm:
 
-bash
+shell
 
 npm install
 
-Set up environment variables:
+Set Up Environment Variables:
+Create a .env file in the project's root directory and define the necessary environment variables. Here is a list of the required variables:
 
-Create a .env file in the root directory and configure necessary environment variables. You may need to set up variables such as database connection URI, JWT secret, etc.
+    PORT: The port on which the server will listen.
+    MONGO_URI: The URI for your MongoDB database.
+    NODE_ENV: The environment mode (e.g., 'development' or 'production').
+    JWT_SECRET: The secret key used for JSON Web Token (JWT) authentication.
 
-Start the server:
+Use this format in your .env file:
 
-bash
+shell
+
+PORT=3000
+MONGO_URI=mongodb://localhost/school-management
+NODE_ENV=development
+JWT_SECRET=your-secret-key
+
+Start the Server:
+Run the following command to start the server:
+
+shell
 
     npm start
 
+    The API will be available at http://localhost:3000.
+
 Usage
-Admins
 
-    GET /api/admins: Retrieve all admins.
-    GET /api/admins/:id: Retrieve a single admin by ID.
-    POST /api/admins: Create a new admin.
-    PUT /api/admins/:id: Update an existing admin by ID.
-    DELETE /api/admins/:id: Delete an admin by ID.
+Detailed instructions on how to use this backend API can be found in the API Documentation.
+Contact
 
-Students
-
-    GET /api/students: Retrieve all students.
-    GET /api/students/:id: Retrieve a single student by ID.
-    POST /api/students: Create a new student.
-    PUT /api/students/:id: Update an existing student by ID.
-    DELETE /api/students/:id: Delete a student by ID.
-
-Classrooms
-
-    GET /api/classrooms: Retrieve all classrooms.
-    GET /api/classrooms/:id: Retrieve a single classroom by ID.
-    POST /api/classrooms: Create a new classroom.
-    PUT /api/classrooms/:id: Update an existing classroom by ID.
-    DELETE /api/classrooms/:id: Delete a classroom by ID.
-
-Schools
-
-    GET /api/schools: Retrieve all schools.
-    GET /api/schools/:id: Retrieve a single school by ID.
-    POST /api/schools: Create a new school.
-    PUT /api/schools/:id: Update an existing school by ID.
-    DELETE /api/schools/:id: Delete a school by ID.
-
-Contributing
-
-Contributions are welcome! Please follow the contribution guidelines outlined in CONTRIBUTING.md.
-License
-
-This project is licensed under the MIT License.
-
+If you have any questions or want to connect, you can reach me at https://www.linkedin.com/in/hamza-abd-el-baset/
