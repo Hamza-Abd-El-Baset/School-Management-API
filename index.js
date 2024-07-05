@@ -1,11 +1,16 @@
 const app = require('./app')
-require('dotenv').config();
-const port = process.env.PORT || 3000;
-const {connectDB} = require('./config/database');
+const config = require('./config/index.config.js');
+
+const port = config.dotEnv.PORT || 3000;
+
 
 
 // Start server
-app.listen(port, () => {
+server = app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-    connectDB()
+    config.dotEnv.MONGO_URI && require('./connect/mongo')({
+        uri: config.dotEnv.MONGO_URI
+    });
 });
+
+
