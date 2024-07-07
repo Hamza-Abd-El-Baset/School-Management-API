@@ -21,9 +21,10 @@ app.use('/api/classrooms', classroomRoutes);
 app.use('/api/students', studentRoutes);
 
 
-// other imports...
-
-// Your middleware and route definitions...
+// ping endpoint
+app.get('/ping', (req, res) => {
+    res.send('Server is awake!');
+});
 
 // Error handling middleware
 app.use(errorHandler);

@@ -31,7 +31,7 @@ This repository contains the backend component of a school management applicatio
 
    - `PORT`: The port on which the server will listen.
    - `MONGO_URI`: The URI for your MongoDB database.
-   - `NODE_ENV`: The environment mode (e.g., 'development' or 'production').
+   - `ENV`: The environment mode (e.g., 'development' or 'production').
    - `JWT_SECRET`: The secret key used for JSON Web Token (JWT) authentication.
 
    Use this format in your `.env` file:
@@ -39,7 +39,7 @@ This repository contains the backend component of a school management applicatio
    ```shell
    PORT=3000
    MONGO_URI=mongodb://localhost/mydatabase
-   NODE_ENV=development
+   ENV=development
    JWT_SECRET=your-secret-key
    ```
 
